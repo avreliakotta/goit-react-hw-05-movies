@@ -6,13 +6,13 @@ import css from './Movies.module.css';
 const Movies = () => {
   const [searchMovies, setSearchMovies] = useState([]);
 
-  const [submitted, setSubmitted] = useState(false);
+  // const [submitted, setSubmitted] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
   // console.log('moviesLocation', location);
 
-  const query = searchParams.get('query');
+  const query = searchParams.get('query' ?? '');
   const ref = useRef(query);
 
   const fetchSearchMovies = useCallback(() => {
@@ -49,25 +49,25 @@ const Movies = () => {
     );
 
   const handleSubmit = value => {
-    setSubmitted(true);
+    // setSubmitted(true);
     setSearchParams({ query: value });
   };
 
   return (
     <>
       <SearchForm onSubmit={handleSubmit} />
-      {submitted && (
-        <ul className={css.visibleList}>
-          {visibleMovies &&
-            visibleMovies.map(movie => (
-              <li key={movie.id}>
-                <Link to={`${movie.id}`} state={{ from: location }}>
-                  {movie.title}
-                </Link>
-              </li>
-            ))}
-        </ul>
-      )}
+      {/* {submitted && ( */}
+      <ul className={css.visibleList}>
+        {visibleMovies &&
+          visibleMovies.map(movie => (
+            <li key={movie.id}>
+              <Link to={`${movie.id}`} state={{ from: location }}>
+                {movie.title}
+              </Link>
+            </li>
+          ))}
+      </ul>
+      {/* )} */}
     </>
   );
 };

@@ -1,9 +1,10 @@
+import { Suspense } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { useRef } from 'react';
 
 import css from './Movie.module.css';
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const { movieId } = useParams();
   // console.log('movieId:', movieId);
 
@@ -100,7 +101,10 @@ export const MovieDetails = () => {
           </li>
         </ul>
       </div>
-      <Outlet />
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+export default MovieDetails;

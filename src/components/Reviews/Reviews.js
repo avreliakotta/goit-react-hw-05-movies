@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import css from './Revievs.module.css';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
   const { movieId } = useParams();
@@ -53,3 +53,4 @@ export const Reviews = () => {
     </>
   );
 };
+export default Reviews;
