@@ -10,7 +10,6 @@ const Home = () => {
   useEffect(() => {
     fetchMovies()
       .then(data => {
-        // console.log(data);
         setTrendingMovies(data.results);
       })
       .catch(error => {

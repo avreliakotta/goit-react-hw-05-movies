@@ -1,19 +1,16 @@
 import { useSearchParams, Link, useLocation } from 'react-router-dom';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { SearchForm } from '../../components/SearchForm/SearchForm';
 import css from './Movies.module.css';
 
 const Movies = () => {
   const [searchMovies, setSearchMovies] = useState([]);
 
-  // const [submitted, setSubmitted] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
-  // console.log('moviesLocation', location);
 
   const query = searchParams.get('query' ?? '');
-  // const ref = useRef(query);
 
   const fetchSearchMovies = useCallback(() => {
     const URL = 'https://api.themoviedb.org/3/search/movie';
@@ -33,15 +30,13 @@ const Movies = () => {
   }, [query]);
 
   useEffect(() => {
-    // ref.current &&
     query &&
       fetchSearchMovies(query)
         .then(data => {
-          console.log('data', data);
           setSearchMovies(data.results);
         })
         .catch(error => console.log(error.message));
-  }, [fetchSearchMovies]);
+  }, [fetchSearchMovies, query]);
 
   const visibleMovies =
     searchMovies &&
@@ -50,14 +45,13 @@ const Movies = () => {
     );
 
   const handleSubmit = value => {
-    // setSubmitted(true);
     setSearchParams({ query: value });
   };
 
   return (
     <>
       <SearchForm onSubmit={handleSubmit} />
-      {/* {submitted && ( */}
+
       <ul className={css.visibleList}>
         {visibleMovies &&
           visibleMovies.map(movie => (
@@ -68,7 +62,6 @@ const Movies = () => {
             </li>
           ))}
       </ul>
-      {/* )} */}
     </>
   );
 };

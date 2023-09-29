@@ -6,7 +6,6 @@ import { useRef } from 'react';
 import css from './Movie.module.css';
 const MovieDetails = () => {
   const { movieId } = useParams();
-  // console.log('movieId:', movieId);
 
   const location = useLocation();
   console.log('locationDetails', location);
@@ -37,7 +36,6 @@ const MovieDetails = () => {
     if (!movieId) return;
     fetchMovieDetails()
       .then(data => {
-        // console.log('data', data);
         setMovie(data);
       })
       .catch(error => setError(error.message));
@@ -58,11 +56,7 @@ const MovieDetails = () => {
         {error && alert('Not found any movie')}
 
         <div className={css.imageWrrapper}>
-          <Link
-            // to={location.state && location.state.from}
-            to={backLinLocationkRef.current}
-            className={css.backLink}
-          >
+          <Link to={backLinLocationkRef.current} className={css.backLink}>
             {'<--'} Go back
           </Link>
 
