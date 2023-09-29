@@ -13,7 +13,7 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
 
-  const backLinLocationkRef = useRef(location.state?.from);
+  const backLinLocationkRef = useRef(location.state?.from ?? '/');
   console.log(location);
   console.log('backLinLocationkRef', backLinLocationkRef);
 
@@ -43,7 +43,7 @@ const MovieDetails = () => {
       .catch(error => setError(error.message));
   }, [fetchMovieDetails, movieId]);
   if (!movie) {
-    return <div>Loading...</div>;
+    return;
   }
 
   const BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w342';
