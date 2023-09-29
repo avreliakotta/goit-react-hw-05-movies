@@ -13,7 +13,7 @@ const Movies = () => {
   // console.log('moviesLocation', location);
 
   const query = searchParams.get('query' ?? '');
-  const ref = useRef(query);
+  // const ref = useRef(query);
 
   const fetchSearchMovies = useCallback(() => {
     const URL = 'https://api.themoviedb.org/3/search/movie';
@@ -33,8 +33,9 @@ const Movies = () => {
   }, [query]);
 
   useEffect(() => {
-    ref.current &&
-      fetchSearchMovies(ref.current)
+    // ref.current &&
+    query &&
+      fetchSearchMovies(query)
         .then(data => {
           console.log('data', data);
           setSearchMovies(data.results);
@@ -44,8 +45,8 @@ const Movies = () => {
 
   const visibleMovies =
     searchMovies &&
-    searchMovies.filter(movie =>
-      movie.title.toLowerCase().includes(query.toLowerCase())
+    searchMovies.filter(
+      movie => movie && movie.title.toLowerCase().includes(query.toLowerCase())
     );
 
   const handleSubmit = value => {
