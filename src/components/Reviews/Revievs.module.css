@@ -1,0 +1,10 @@
+.reviewsList {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.ReviewSubtitle {
+  margin-bottom: 8px;
+  color: #2f4f4f;
+}

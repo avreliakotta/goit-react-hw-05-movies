@@ -1,0 +1,9 @@
+.homeTitle {
+  color: #2e2f42;
+  margin-bottom: 20px;
+}
+.trendingList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

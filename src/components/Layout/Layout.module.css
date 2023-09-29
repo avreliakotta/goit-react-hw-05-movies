@@ -1,0 +1,24 @@
+.moviesList {
+  display: flex;
+  gap: 20px;
+  list-style-type: none;
+}
+:global .active {
+  color: tomato;
+}
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 3px 3px 3px 0px rgba(5, 5, 5, 0.3);
+}
+.link {
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 400;
+}
+.Container {
+  width: 1280px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
