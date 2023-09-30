@@ -1,45 +1,27 @@
 import { Suspense } from 'react';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useRef } from 'react';
+import { fetchMovieDetails } from '../../servises/moviesApi';
 
 import css from './Movie.module.css';
 const MovieDetails = () => {
   const { movieId } = useParams();
 
   const location = useLocation();
-  console.log('locationDetails', location);
+
   const [movie, setMovie] = useState(null);
-  const [error, setError] = useState(null);
 
   const backLinLocationkRef = useRef(location.state?.from ?? '/');
-  console.log(location);
-  console.log('backLinLocationkRef', backLinLocationkRef);
-
-  const fetchMovieDetails = useCallback(() => {
-    const URL = `https://api.themoviedb.org/3/movie/${movieId}`;
-    const options = {
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTU3NDZiZDFhN2VhZDc4YjNiZmQ5MDRhZTAwMDRhNCIsInN1YiI6IjY1MGM2YWI2MmM2YjdiMDBjNGZkZmYzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DX99mnnx3ecqx74al80fvW6EsnGicUU6ObIsdIfAqC4',
-      },
-    };
-    return fetch(URL, options).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(new Error('Not found movies'));
-    });
-  }, [movieId]);
 
   useEffect(() => {
     if (!movieId) return;
-    fetchMovieDetails()
+    fetchMovieDetails(movieId)
       .then(data => {
         setMovie(data);
       })
-      .catch(error => setError(error.message));
-  }, [fetchMovieDetails, movieId]);
+      .catch(error => console.log(error.message));
+  }, [movieId]);
   if (!movie) {
     return;
   }
@@ -53,8 +35,6 @@ const MovieDetails = () => {
   return (
     <>
       <div className={css.container}>
-        {error && alert('Not found any movie')}
-
         <div className={css.imageWrrapper}>
           <Link to={backLinLocationkRef.current} className={css.backLink}>
             {'<--'} Go back

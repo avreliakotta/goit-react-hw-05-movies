@@ -1,11 +1,10 @@
-import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchMovies } from '../../servises/moviesApi';
 import css from './Home.module.css';
+import { MoviesList } from 'components/MoviesList/MoviesList';
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [error, setError] = useState(null);
-  const location = useLocation();
 
   useEffect(() => {
     fetchMovies()
@@ -24,11 +23,7 @@ const Home = () => {
         {trendingMovies &&
           trendingMovies.map(movie => {
             return (
-              <li key={movie.id}>
-                <Link to={`movies/${movie.id}`} state={{ from: location }}>
-                  {movie.title}
-                </Link>
-              </li>
+              <MoviesList key={movie.id} movie={movie} basePath="movies" />
             );
           })}
       </ul>

@@ -1,36 +1,22 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import css from './Cast.module.css';
+import { fetchCast } from '../../servises/moviesApi';
 const Cast = () => {
   const [cast, setCast] = useState([]);
   const [error, setError] = useState(null);
   const { movieId } = useParams();
-  console.log('movieId', movieId);
-  const fetchCast = useCallback(() => {
-    const URL = `https://api.themoviedb.org/3/movie/${movieId}/credits`;
-    const options = {
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmNTU3NDZiZDFhN2VhZDc4YjNiZmQ5MDRhZTAwMDRhNCIsInN1YiI6IjY1MGM2YWI2MmM2YjdiMDBjNGZkZmYzMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.DX99mnnx3ecqx74al80fvW6EsnGicUU6ObIsdIfAqC4',
-      },
-    };
-    return fetch(URL, options).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-      return Promise.reject(new Error('Not found movies'));
-    });
-  }, [movieId]);
+  // console.log('movieId', movieId);
 
   useEffect(() => {
     if (!movieId) return;
-    fetchCast()
+    fetchCast(movieId)
       .then(data => {
         // console.log('data', data);
         setCast(data.cast);
       })
       .catch(error => setError(error.message));
-  }, [fetchCast, movieId]);
+  }, [movieId]);
   if (!cast) {
     return <div>Loading...</div>;
   }
@@ -56,7 +42,7 @@ const Cast = () => {
                 height={231}
                 alt={item.name}
               />
-              {/* <div className={css.defaultImage}>No Image Available </div> */}
+
               <div className={css.CastContent}>
                 <h3 className={css.castSubtitle}>{item.name} </h3>
                 <p className={css.textContent}>
